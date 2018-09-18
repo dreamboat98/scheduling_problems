@@ -14,7 +14,7 @@ import datetime
 
 
 # import raw temporal data
-raw_data = pd.read_csv('n2ex_2018_12_11.csv')
+raw_data = pd.read_csv('https://github.com/diarmidr/scheduling_problems/blob/n2ex_2018_12_11.csv')
 price = [float(x) for x in raw_data.ix[:, 'price_dollar']]
 
 
