@@ -36,7 +36,7 @@ model = ConcreteModel()
 
 # BESS
 BESSRatedPower = 1                              # kW, discharge power that gives 75% stack EERT
-EtoP = 0.5                                        # Energy to Power ratio of RFB
+EtoP = 0.5                                      # Energy to Power ratio of RFB
 model.BESSCapacity = Param(initialize=EtoP*BESSRatedPower)        # kWh
 model.ASR = Param(initialize=0.0000538)         # Ohm.m2 from linear fit
 model.VOCV50SOC = Param(initialize=1.4)         # OCV at 50% SOC (PNNL)
