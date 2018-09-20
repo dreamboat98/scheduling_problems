@@ -23,7 +23,7 @@ price = [float(x) for x in raw_data.ix[:, 'price_dollar']]
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 
-print(datetime.datetime(now))
+print(datetime.datetime.now())
 ########################################################################################################################
 # PYOMO model starts here
 ########################################################################################################################
@@ -151,7 +151,7 @@ opt = SolverFactory('gurobi')
 
 results = opt.solve(model)
 
-print(datetime.datetime(now))  # For measurement of solve time
+print(datetime.datetime.now())  # For measurement of solve time
 ########################################################################################################################
 # Terminal window output of optimization results
 ########################################################################################################################
