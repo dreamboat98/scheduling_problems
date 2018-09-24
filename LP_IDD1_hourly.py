@@ -160,7 +160,7 @@ print(datetime.datetime.now())
 for i in model.I:
     print(i, "%.2f" % model.CurrentDensityCharge[i].value, "%.2f" % model.CurrentDensityDischarge[i].value,
           "%.2f" % value(SOCtracker[i]))
-print("Revenue from", BESSRatedPower, "kW, ", value(model.BESSCapacity), "kWh system: £", "%.3f" % value(model.Objective))
+print("Predicted revenue from", BESSRatedPower, "kW, ", value(model.BESSCapacity), "kWh system: £", "%.3f" % value(model.Objective), "under fixed efficiency assumption.")
 
 #Actual revenue (considering real losses, as per the NLP formulation)
 actual_revenue = []
@@ -170,7 +170,10 @@ for i in model.I:
                   ((model.VOCV50SOC - model.Vfaradaic) * model.CurrentDensityDischarge[i].value * (1-LossBOP)\
                   - (model.VOCV50SOC + model.Vfaradaic) * model.CurrentDensityCharge[i].value * (1/(1-LossBOP)) \
            - model.ASR * (model.CurrentDensityDischarge[i].value**2 + model.CurrentDensityCharge[i].value**2))
-
+    actual_revenue = actual_revenue + [actual_hourly_revenue]
+actual_revenue =sum(actual_revenue)
+print("Actual revenue from", BESSRatedPower, "kW, ", value(model.BESSCapacity), "kWh system: £", "%.3f" % actual_revenue, "under real efficiency.")                  
+                  
 ########################################################################################################################
 # CSV output of optimization results
 ########################################################################################################################
