@@ -43,6 +43,8 @@ LossBOP = 0.02                                  # One way losses due to BOP, Web
 BESSRatedCurrentDensity = 1100                  # A/m2, current density at EffDC = 75%  (EffV*EffC*(1-LossBOP)^2)
 StackArea = 1000 * BESSRatedPower / (BESSRatedCurrentDensity * model.VOCV50SOC * math.sqrt(EffV) * (1-LossBOP))
 model.StackArea = Param(initialize=StackArea)
+model.ASR = Param(initialize=0.0000894)         # Ohm.m2 from linear fit
+model.Vfaradaic = Param(initialize=0.035)       # Faradaic potential, from extrapolation to I = 0
 
 # Data-set
 model.TimeStep = Param(initialize=1)          # Hours
@@ -159,6 +161,15 @@ for i in model.I:
     print(i, "%.2f" % model.CurrentDensityCharge[i].value, "%.2f" % model.CurrentDensityDischarge[i].value,
           "%.2f" % value(SOCtracker[i]))
 print("Revenue from", BESSRatedPower, "kW, ", value(model.BESSCapacity), "kWh system: £", "%.3f" % value(model.Objective))
+
+#Actual revenue (considering real losses, as per the NLP formulation)
+actual_revenue = []
+for i in model.I:
+    acutal_hourly_revenue = model.StackArea * model.TimeStep * (1 / 1000000) \
+            * sum(model.PriceBM[t] *
+                  ((model.VOCV50SOC - model.Vfaradaic) * model.CurrentDensityDischarge[i].value * (1-LossBOP)\
+                  - (model.VOCV50SOC + model.Vfaradaic) * model.CurrentDensityCharge[i].value * (1/(1-LossBOP)) \
+           - model.ASR * (model.CurrentDensityDischarge[i].value**2 + model.CurrentDensityCharge[i].value**2))
 
 ########################################################################################################################
 # CSV output of optimization results
