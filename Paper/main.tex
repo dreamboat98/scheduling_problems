@@ -123,7 +123,7 @@ The typical LP formulation for the scheduling problem uses an objective function
 R = \tau \sum_{t} (P_{Dis,t} - P_{Chg,t}) p_t
 \end{equation}
 
-where $P_{Dis,t}$ and $P_{Chg,t}$ represent the bounded variables discharge and charge power between the RFB and the rest of the system in period $t$, $\tau$ the time-step parameter (length of period $t$) and $p_t$ the parameter price of electrical energy in period $t$.
+where $P_{Dis,t}$ and $P_{Chg,t}$ represent the bounded variables discharge and charge power between the RFB and the rest of the system in period $t$, $\tau$ the time-step parameter (length of period $t$) and $p_t$ the parameter price of electrical energy in period $t$ \sol{it would be worth defining you $Y$ here and summing over $t \in Y$, this would clarify some of your later text}.
 
 The state of charge (SOC) of the BESS is then defined by:
 
@@ -138,7 +138,7 @@ where $E_{BESS}$ is the parameter energy capacity and $\eta_{Chg}$ and $\eta_{Di
 
 To re-pose this in terms of current-density, the power variable(s) with charge and discharge current-density variables.\sol{can you describe the relations that you've used here}
 
-Current-density was chosen over current as the former is a scale-independent metric commonly used in the RFB literature. The use of current-density makes multiplication by stack area necessary to obtain absolute current, and multiplication by open-cell-volage (OCV) necessary to obtain power. Separate efficiencies representing voltaic and ohmic losses must now be specified, rather than the single energy efficiency term in \cref{eqn: Lit_Review_LP_SOC_Constraint_Example}. As current-density is defined based on the current at the RFB terminals, coulombic losses are dealt with upstream in \cref{eqn: Method_SOC_Tracker}. It is however necessary to incorporate voltaic losses in the objective function.  The objective function for revenue in period $Y$ (to be maximised) is defined by:
+Current-density was chosen over current as the former is a scale-independent metric commonly used in the RFB literature. The use of current-density makes multiplication by stack area necessary to obtain absolute current, and multiplication by open-cell-volage (OCV) necessary to obtain power. Separate efficiencies representing voltaic and ohmic losses must now be specified, rather than the single energy efficiency term in \cref{eqn: Lit_Review_LP_SOC_Constraint_Example}. As current-density is defined based on the current at the RFB terminals, coulombic losses are dealt with upstream in \cref{eqn: Method_SOC_Tracker}. It is however necessary to incorporate voltaic losses in the objective function.  The objective function for revenue in period $Y$ \sol{we need to define $Y$ as the set of times points, t}(to be maximised) is defined by:
 
 
 \begin{equation}
@@ -166,7 +166,7 @@ SOC_{min} \leq SOC_t \leq SOC_{max} \; \forall t \in Y
 
 where $SOC_{min}$ and $SOC_{max}$ are the minimum and maximum permitted SOC parameters.
 
-So that the optimisation may be legitimately performed on consecutive periods of historical data (i.e. maintaining an energy balance) the SOC is required to return to 50\% at the end of each period. This constraint is formalised by:
+So that the optimisation may be legitimately performed on consecutive periods of historical data (i.e. maintaining an energy balance) the SOC is required to return to 50\% at the end of each period\sol{in the introduction you noted that other authors forced the SOC to zero, why is the difference?}. This constraint is formalised by:
 
 \begin{equation}
 \label{eqn: Method_Constraint_E_Conservation}
@@ -185,7 +185,7 @@ where $I_{min}$ and $I_{max}$ are the minimum and maximum permitted current-dens
 
 \subsection{NLP treatment of voltaic losses}
 \label{Model_Formulation_NLP_treatment_voltaic_losses}
-A major simplification in the LP problem in terms of power is the assumption of a constant energy efficiency parameter. This assumption also applies to the LP problem in current-density terms introduced in \cref{Model_Formulation_LP_Reference_Current_Density_Terms}, although separate voltaic and coulombic efficiencies parameters are called for. In reality, ohmic (and pseudo-ohmic) over-potential is a linear function of current-density . The faradaic over-potential, which occurs when the circuit is closed, may be considered constant with respect to current-density (CITE article I used in CR). \cref{eqn: Linear_Schedule_Objective_Function_Current_as_Variable} was adapted to include these losses, by subtracting/adding the faradaic over-potential from/to the OCV during discharge/charge, and including the ohmic losses in the form of the classical $P_{Loss} = I^2R$ equation. This results in a nonlinear (NLP) objective function for revenue in period $Y$ defined by:
+A major simplification in the LP problem in terms of power is the assumption of a constant energy efficiency parameter. This assumption also applies to the LP problem in current-density terms introduced in \cref{Model_Formulation_LP_Reference_Current_Density_Terms}, although separate voltaic and coulombic efficiencies parameters are accounted for for. In reality, ohmic (and pseudo-ohmic) over-potential is a linear function of current-density. The faradaic over-potential, which occurs when the circuit is closed, may be considered constant with respect to current-density (CITE article I used in CR). \cref{eqn: Linear_Schedule_Objective_Function_Current_as_Variable} was adapted to include these losses, by subtracting/adding the faradaic over-potential from/to the OCV during discharge/charge, and including the ohmic losses in the form of the classical $P_{Loss} = I^2R$ equation. This results in a nonlinear (NLP) objective function for revenue in period $Y$ given by:
 
 \begin{equation}
 \label{eqn: Non-Linear_Schedule_Objective_Function_Current_as_Variable}
@@ -198,10 +198,7 @@ where $V_a$ and $ASR$ are scalar parameters representing faradaic over-potential
 Although non-linear, \cref{eqn: Non-Linear_Schedule_Objective_Function_Current_as_Variable} the objective function is convex (as it requires maximising a negative quadratic), hence a gradient based algorithmic solver is guaranteed to find the optimum from any starting point. 
 
 
-
-Under the constant coulombic efficiency assumption \cref{eqn: Method_SOC_Tracker} is linear, and so by extension are the constraints in \cref{eqn: Method_Constraint_SOC_Range,eqn: Method_Constraint_E_Conservation}.  The overall formulation hence comprises a nonlinear objective function subject to linear constraints. This is an improvement over the formulations of losses expressed in power efficiency terms by \cite{Nguyen2015,Sarker2017}, both of which use non-linear SOC constraint expressions. According to \cite{Hart2017}
-
-\textit{"In the context of nonlinear models, those with nonlinear objective functions are typically easier to optimize than models with nonlinear constraint expressions"}
+Under the constant coulombic efficiency assumption \cref{eqn: Method_SOC_Tracker} is linear, and so by extension are the constraints in \cref{eqn: Method_Constraint_SOC_Range,eqn: Method_Constraint_E_Conservation}.  The overall formulation hence comprises a nonlinear objective function subject to linear constraints. This is an improvement over the formulations of losses expressed in power efficiency terms by \cite{Nguyen2015,Sarker2017}, both of which use non-linear SOC constraint expressions, as it is likely to be easier to resolve \cite{Hart2017}.
 
 The formulation also benefits from a consistent definition of the current-density variables in terms of flow between the terminals and the external system, unlike in \cite{Sarker2017}.
 
