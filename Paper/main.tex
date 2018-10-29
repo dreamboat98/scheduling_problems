@@ -346,7 +346,11 @@ The optimisation of the scheduling was performed for each day in 2017 using both
 
 Both the LP and NLP solutions involve charging the VRFB when the electrical price is low (e.g. between 05:00 and 07:00) and discharging it when the price is high (e.g. 10:00 to 13:00). The LP optimal profile involves discharging or charging the system at high current-density in the four hours with the most extreme prices. The NLP optimal schedule also targets the most extreme periods, but spreads the charging/discharging out. This is the consequence of factoring variable ohmic losses in the objective function -   high current-density is penalised by higher losses. Under the LP formulation, the VRFB is predicted to generate \pounds 0.068, whereas the NLP formulation predicts a revenue of \pounds 0.063. In reality however, the voltaic losses that would occur under the LP schedule would reduce the revenue to \pounds 0.051. Across 2017, LP scheduling would have resulted in \pounds 22.61, against a prediction of \pounds 33.16, and NLP scheduling would have yielded \pounds 27.99.
 
+<<<<<<< HEAD
 In a techno-economic analysis of this VRFB, use of the LP formulation would therefore lead to errors in calculation of revenue, in this case an overestimation. Use of the NLP formulation to determine scheduling in a practical application would result in the prediction of significantly higher revenue than would the LP formulation. It would be possible to set a representative voltaic efficiency ($\bar\eta_V$) in the LP formulation such that the estimate of revenue would be closer to that of the NLP formulation, but this value cannot be known \textit{a priori}.
+=======
+In a techno-economic analysis of this VRFB, use of the LP formulation would therefore lead to meaningful errors in calculation of revenue (in this case an overestimation). Use of the NLP formulation to determine scheduling in a practical application would result in significantly higher revenue than would the LP formulation. It would be possible to set a representative voltaic efficiency ($\bar\eta_V$) in the LP formulation such that the estimate of revenue would be closer to that of the NLP formulation, but this value cannot be known \textit{a priori}.
+>>>>>>> 0c6cf250c91f6f15e3fc5df5d28b409779588529
 
 Importantly, the increased fidelity in the formulation results in a minimal increase in solution time; in this case, solving  \cref{eqn: Linear_Schedule_Objective_Function_Current_as_Variable} for each day in 2017 takes \SI{129}{\second} over the \SI{127}{\second} required to solve the LP objective function in \cref{eqn: Linear_Schedule_Objective_Function_Current_as_Variable}.
 
@@ -379,7 +383,27 @@ The performance of arbitrage between 16:00 and 20:00 is notably reduced in \cref
 \label{Results_Cell_Voltage_Constraint}
 In the NLP formulations given in \cref{eqn: Non-Linear_Schedule_Objective_Function_Current_as_Variable,eqn: NLP_true_OCV_long_form} it is assumed that the RFB may be charged at maximum current-density at the maximum SOC. This was the charging strategy applied in \cite{Reed2016}, where the cell-voltage was allowed to reach \SI{1.85}{\volt} at the highest current-density, corresponding to an approximate SOC of 0.85. Overcharging may lead to oxygen evolution at the cathode and hydrogen evolution at the anode. This results in reduced coulombic efficiency and, more importantly, the evolved gases can cause a range of problems as described by \cite{Kear2012}.  The particular cell-voltage at which gas evolution becomes problematic will vary from system to system as it depends on the particular electrolyte chemistry. In this case study $V_{max}$ in \cref{eqn: Cell_Voltage_Constraint} was set at 1.65, just below the voltage at which \cite{Wei2017} reported evolution of macroscopic bubbles of hydrogen and oxygen (\SI{1.70}{\volt}). 
 
+<<<<<<< HEAD
 Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage_Constraint} for the 2017 data resulted in \pounds 26.07 compared to \pounds 26.40 when the cell voltage was not constrained. The difference is small because high current-density is already discouraged by the voltaic losses in \cref{eqn: NLP_true_OCV_long_form}. \cref{fig:V_max_schedules} shows the optimal schedules with and without constraint for 5\textsuperscript{th} February 2017, where the difference in revenue was greatest (\pounds 0.018 compared to \pounds 0.020). \cref{fig:V_max_voltages} shows the corresponding cell-voltage profiles.
+=======
+Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage_Constraint} for the 2017 data resulted in \pounds 26.07 compared to \pounds 26.40 when the cell voltage was not constrained. The difference is small because high current-density is already discouraged by the functionalised voltaic losses in \cref{eqn: NLP_true_OCV_long_form}. \cref{fig:V_max_schedules_no_effect_day} shows the optimal scheduling with and without voltage constraint for the median revenue day 22\textsuperscript{nd} August 2017, and \cref{fig:V_max_voltages_no_effect_day} the corresponding cell voltage profiles, showing a maximum cell-voltage of \SI{1.62}{\volt} and hence no violation in the unconstrained schedule.
+
+\begin{figure}[!ht]
+\centering
+\subfloat[][]{
+\label{fig:V_max_schedules_no_effect_day}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./V_max_schedules_no_effect_day.pdf}
+}
+\subfloat[][]{
+\label{fig:V_max_voltages_no_effect_day}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./V_max_voltages_no_effect_day.pdf}
+}
+\caption{(a) Optimal VRFB schedules derived for the 22\textsuperscript{nd} August 2017 by maximising \cref{eqn: NLP_true_OCV_long_form} with no cell-voltage constraint, and subject to the cell voltage constraint given in \cref{eqn: Cell_Voltage_Constraint}. (b) Corresponding cell-voltage profiles.}
+\end{figure}
+
+
+\cref{fig:V_max_schedules} shows the optimal schedules with and without constraint for 5\textsuperscript{th} February 2017, where the difference in revenue was greatest (\pounds 0.018 vs. \pounds 0.020). \cref{fig:V_max_voltages} shows the corresponding cell-voltage profiles.
+>>>>>>> 0c6cf250c91f6f15e3fc5df5d28b409779588529
 
 \begin{figure}[!ht]
 \centering
@@ -391,7 +415,7 @@ Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage
 \label{fig:V_max_voltages}
 \includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./V_max_voltages.pdf}
 }
-\caption{(a) Optimal VRFB schedules derived for the 5\textsuperscript{th} February 2017 by maximising \cref{eqn: NLP_true_OCV_long_form} with no cell-voltage constraint, and subject to the cell voltage constraint given in \cref{eqn: Cell_Voltage_Constraint}. (b)Corresponding cell-voltage profiles.}
+\caption{(a) Optimal VRFB schedules derived for the 5\textsuperscript{th} February 2017 by maximising \cref{eqn: NLP_true_OCV_long_form} with no cell-voltage constraint, and subject to the cell voltage constraint given in \cref{eqn: Cell_Voltage_Constraint}. (b) Corresponding cell-voltage profiles.}
 \end{figure}
 
 In the unconstrained case the RFB charges at the maximum current-density of \SI{3200}{\ampere\per\square\meter} in hour 19 in order to capitalise on the unusually low electrical price, resulting in a cell-voltage of \SI{1.71}{\volt}. In the constrained case, the current-density is restricted to \SI{2213}{\ampere\per\square\meter} in the same period, and the RFB must charge more (and discharge less) in other periods to satisfy \cref{eqn: Method_Constraint_E_Conservation}. The impact of the constraint would be more severe if the variations in price data were greater, or the maximum voltage set at a lower value.
