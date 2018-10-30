@@ -123,7 +123,7 @@ The typical LP formulation for the scheduling problem uses an objective function
 R = \tau \sum_{t} (P_{Dis,t} - P_{Chg,t}) p_t
 \end{equation}
 
-where $P_{Dis,t}$ and $P_{Chg,t}$ represent the bounded variables discharge and charge power between the RFB and the rest of the system in period $t$, $\tau$ the time-step parameter (length of period $t$) and $p_t$ the parameter price of electrical energy in period $t$ \sol{it would be worth defining you $Y$ here and summing over $t \in Y$, this would clarify some of your later text}.
+where $P_{Dis,t}$ and $P_{Chg,t}$ represent the bounded variables discharge and charge power between the RFB and the rest of the system in period $t$, $\tau$ the time-step parameter (length of sub-period $t$) and $p_t$ the parameter price of electrical energy in period $t$ \sol{it would be worth defining you $Y$ here and summing over $t \in Y$, this would clarify some of your later text}.
 
 The state of charge (SOC) of the BESS is then defined by:
 
@@ -138,7 +138,7 @@ where $E_{BESS}$ is the parameter energy capacity and $\eta_{Chg}$ and $\eta_{Di
 
 To re-pose this in terms of current-density, the power variable(s) with charge and discharge current-density variables.\sol{can you describe the relations that you've used here}
 
-Current-density was chosen over current as the former is a scale-independent metric commonly used in the RFB literature. The use of current-density makes multiplication by stack area necessary to obtain absolute current, and multiplication by open-cell-volage (OCV) necessary to obtain power. Separate efficiencies representing voltaic and ohmic losses must now be specified, rather than the single energy efficiency term in \cref{eqn: Lit_Review_LP_SOC_Constraint_Example}. As current-density is defined based on the current at the RFB terminals, coulombic losses are dealt with upstream in \cref{eqn: Method_SOC_Tracker}. It is however necessary to incorporate voltaic losses in the objective function.  The objective function for revenue in period $Y$ \sol{we need to define $Y$ as the set of times points, t}(to be maximised) is defined by:
+Current-density was chosen over current as the former is a scale-independent metric commonly used in the RFB literature. The use of current-density makes multiplication by stack area necessary to obtain absolute current, and multiplication by open-cell-volage (OCV) necessary to obtain power. Separate efficiencies representing voltaic and ohmic losses must now be specified, rather than the single energy efficiency term in \cref{eqn: Lit_Review_LP_SOC_Constraint_Example}. As current-density is defined based on the current at the RFB terminals, coulombic losses are dealt with upstream in \cref{eqn: Method_SOC_Tracker}. It is however necessary to incorporate voltaic losses in the objective function.  In the period $Y$, made up of sub-periods $t$, the optimal schedule is found by maximising the objective function for revenue, defined by:
 
 
 \begin{equation}
@@ -166,7 +166,7 @@ SOC_{min} \leq SOC_t \leq SOC_{max} \; \forall t \in Y
 
 where $SOC_{min}$ and $SOC_{max}$ are the minimum and maximum permitted SOC parameters.
 
-So that the optimisation may be legitimately performed on consecutive periods of historical data (i.e. maintaining an energy balance) the SOC is required to return to 50\% at the end of each period\sol{in the introduction you noted that other authors forced the SOC to zero, why is the difference?}. This constraint is formalised by:
+So that the optimisation may be legitimately performed on consecutive periods of historical data (i.e. maintaining an energy balance) the SOC is required to return to 50\% at the end of each period. This value is chosen so as not to force the RFB to operate at low or high SOC, as would be the case if the minimum permitted SOC was used, as in \cite{Hu2010}. This constraint is formalised by:
 
 \begin{equation}
 \label{eqn: Method_Constraint_E_Conservation}
@@ -228,7 +228,7 @@ Replacing $OCV_{50\%}$ with $OCV_t$ in \cref{eqn: Non-Linear_Schedule_Objective_
 \end{equation}
 
 
-This objective function is non-convex, due to the presence of bivariate quadratic terms (e.g. $-I_{D,t}I_{C,t-1}$). However, it is possible to solve the problem by generating a positive semidefinite\sol{I think that we should just leave it at the previous sentence, as the thing turns our to work anyway}
+This objective function is non-convex, due to the presence of bivariate quadratic terms such as $-I_{D,t}I_{C,t-1}$. 
 
 
 \subsection{Cell Voltage Constraint}
@@ -277,13 +277,13 @@ Where $r_{e:p}$ is the specified energy to power ratio of the system. The presen
 
 \subsection{The Application}
 \label{Results_The_Application}
-Pure price arbitrage on the day ahead N2EX electrical market was chosen as a case study, as the availability of future price information makes deterministic schedule optimisation relevant. Schedule optimisation was performed on 24h periods, with $\tau$ of 1h. The indexed price $p_t$ was parametrised using data obtained from the NordPool website \cite{NordPool2016}.
+Pure price arbitrage on the day ahead N2EX electrical market was chosen as a case study, as the availability of future price information makes deterministic schedule optimisation relevant as described by \cite{Hu2010}. Schedule optimisation was performed on 24h periods, with $\tau$ of 1h. The indexed price $p_t$ was parametrised using data obtained from the NordPool website \cite{NordPool2016}.
 
 \subsubsection{The RFB}
 \label{Model_Formulation_VRFB_Params}
 \cite{Reed2016} studied various electrode flow architectures on a \SI{1}{\kilo\watt} VRFB system based on a \SI{50}{\micro\meter} Nafion NR212 membrane. In this case study, performance data were taken from the test of the highest performing stack architecture (IDD2s) at an electrolyte flow rate of 400 \si{\ml\per\minute} per cell. This setup was tested at three current-densities: 1600, 2400 and 3200 \si{\ampere\per\square\meter}. At each test condition efficiency data were obtained as integrals over a cycle between 15\% and 85\% SOC. 
 
-In the parametrisation of the VRFB for following case studies $P_{rated}$ was set at \SI{1}{\kilo\watt}, the energy to power capacity ratio $r_{e:p}$ was set at 4 and $\eta_{rated}$ was set at 75\%. $L_{BOP}$\sol{should this be little l?} was set at 0.02, based on a conservative interpretation of the pumping power data reported for a very similar system by \cite{Kim2013}. A coulombic efficiency ($\eta_C$) of 0.975 was derived as the average of the values reported by \cite{Reed2016} at the three current-densities tested, which only varied between 0.974 and 0.976.  For the chosen system the overall energy efficiency requirement in \cref{eqn: Rated_efficiency} is satisfied when the voltaic efficiency $\eta_{V,rated}$ is 0.801, which corresponds (by linear interpolation) to a current-density ($I_{rated}$) of \SI{2188}{\ampere\per\square\meter}. $OCV_{50\%}$ was taken from \cite{Kim2011}, where the OCV of a chloride electrolyte was reported at 20\%, 50\% and 80\% SOC. Although a different electrolyte, based on a mixture of sulphuric acid and hydrochloric acid, was used in \cite{Reed2016} the OCV data have not been published.
+In the parametrisation of the VRFB for following case studies $P_{rated}$ was set at \SI{1}{\kilo\watt}, the energy to power capacity ratio $r_{e:p}$ was set at 4 and $\eta_{rated}$ was set at 75\%. $l_{BOP}$ was set at 0.02, based on a conservative interpretation of the pumping power data reported for a very similar system by \cite{Kim2013}. A coulombic efficiency ($\eta_C$) of 0.975 was derived as the average of the values reported by \cite{Reed2016} at the three current-densities tested, which only varied between 0.974 and 0.976.  For the chosen system the overall energy efficiency requirement in \cref{eqn: Rated_efficiency} is satisfied when the voltaic efficiency $\eta_{V,rated}$ is 0.801, which corresponds (by linear interpolation) to a current-density ($I_{rated}$) of \SI{2188}{\ampere\per\square\meter}. $OCV_{50\%}$ was taken from \cite{Kim2011}, where the OCV of a chloride electrolyte was reported at 20\%, 50\% and 80\% SOC. Although a different electrolyte, based on a mixture of sulphuric acid and hydrochloric acid, was used in \cite{Reed2016} the OCV data have not been published.
 
 \cref{tab:VRFB_Sizing_Params} summarises the parameter values used to represent the VRFB.
 
@@ -352,7 +352,7 @@ In a techno-economic analysis of this VRFB, use of the LP formulation would ther
 In a techno-economic analysis of this VRFB, use of the LP formulation would therefore lead to meaningful errors in calculation of revenue (in this case an overestimation). Use of the NLP formulation to determine scheduling in a practical application would result in significantly higher revenue than would the LP formulation. It would be possible to set a representative voltaic efficiency ($\bar\eta_V$) in the LP formulation such that the estimate of revenue would be closer to that of the NLP formulation, but this value cannot be known \textit{a priori}.
 >>>>>>> 0c6cf250c91f6f15e3fc5df5d28b409779588529
 
-Importantly, the increased fidelity in the formulation results in a minimal increase in solution time; in this case, solving  \cref{eqn: Linear_Schedule_Objective_Function_Current_as_Variable} for each day in 2017 takes \SI{129}{\second} over the \SI{127}{\second} required to solve the LP objective function in \cref{eqn: Linear_Schedule_Objective_Function_Current_as_Variable}.
+Importantly, the increased fidelity in the formulation results in a minimal increase in solution time; in this case, solving  \cref{eqn: Linear_Schedule_Objective_Function_Current_as_Variable} for each day in 2017 takes \SI{129}{\second} versus the \SI{127}{\second} required to solve the LP objective function in \cref{eqn: Linear_Schedule_Objective_Function_Current_as_Variable}.
 
 
 \subsection{NLP with functional OCV}
