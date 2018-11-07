@@ -86,13 +86,13 @@ Redox flow Battery \sep Optimisation \sep Non-linear Programming \sep Techno-Eco
 %% main text
 \section{Introduction}
 \label{sec:Intro}
-Worldwide, the need to reduce CO$_2$ emissions has stimulated the development of a wide range of renewable energy sources. Presently, renewable energy is estimated to account for 10\% of global energy consumption, and this is forecast to grow to 12\% by 2023. The growth of renewable energy is forecast to be highest in the electrical power sector, from 24\% in 2017 to 30\% in 2023. Although hydro power presently accounts for 50\% of renewable power generation, the  intermittent power sources wind and solar are forecast to contribute most to this growth\cite{IEA2018}. A number of large European economies, such as Germany, UK, Italy and Spain obtained 23\% to 30\% of there electrical energy from non-hydro renewable power in 2017 \cite{BP2018}.
+Worldwide, the need to reduce CO$_2$ emissions is stimulatling the development of a wide range of renewable energy sources. Presently, renewable energy is estimated to account for 10\% of global energy consumption, and this is forecast to grow to 12\% by 2023. The growth of renewable energy is forecast to be highest in the electrical power sector, from 24\% in 2017 to 30\% in 2023. Although hydro power presently accounts for 50\% of renewable power generation, the  intermittent power sources wind and solar are forecast to contribute most to this growth\cite{IEA2018}. A number of large European economies, such as Germany, UK, Italy and Spain obtained 23\% to 30\% of there electrical energy from non-hydro renewable power in 2017 \cite{BP2018}.
 
 The fluctuating output from wind and solar is topped up to match demand primarily by varying output from fossil fuel power thermal plant. In the UK, this is specifically achieved by gas turbines and to a lesser extent coal plant \cite{DraxElectricInsights}. In order to meet the strict CO$_2$ emissions targets for the UK electrical supply by 2050, and bearing in mind that nuclear power capacity is not predicted to grow until after 2030, either carbon capture or significantly greater renewable power penetration will be required at the supply side \cite{FES2018}.
 
-In economic terms, the price of electricity at a given moment is set by the operating costs and finance requirements of the least economic generator that must be called upon \cite{Staffell2016}. As wind and solar have zero marginal cost, increasing penetration of these power sources will reduce electrical price according to a stochastic distribution. At the same time, the capacity factors of the dispatchable fossil plant will decrease, and hence a premium is added to the operating cost in order to cover CAPEX and other costs. In Europe, the operating cost of fossil generation is further increased by the required purchase of credits under the Emmisions Trading System \cite{Staffell2018}. The overall effect of these developments would be an increase in price variability, although this has been mitigated in practice by markets for capacity, where generators may supplement income from energy sales with payments for availability of power capacity \cite{ENGIE}.
+In economic terms, the price of electricity at a given moment is set by the operating costs and finance requirements of the least economic generator that must be called upon \cite{Staffell2016}. As wind and solar have zero marginal cost, increasing penetration of these power sources will reduce electrical price according to a stochastic distribution. At the same time, the capacity factors of the dispatchable fossil plant will decrease, and hence a premium is added to the operating cost in order to cover CAPEX and other costs. Across the EU, the operating cost of fossil generation is further increased by the required purchase of credits under the Emissions Trading System \cite{Staffell2018}. The overall effect of these developments would be an increase in price variability, although this has been mitigated in practice by markets for capacity, where generators may supplement income from energy sales with payments for availability of power capacity \cite{ENGIE}.
 
-Such price variability presents an opportunity for arbitrage by energy storage systems (ESS), which may charge and discharge in periods of low and high price respectively. At present however, revenue from arbitrage on the electrical price alone is not sufficient to justify BESS investment, even under optimistic economic assumptions \cite{Hu2010}. Hence an important aspect of BESS economics is revenue stacking, where multiple revenue streams are captured by the same system. For example by providing grid reliability services as well as performing market arbitrage. In the UK this is illustrated by the fact that the majority of successful BESS applicants for enhanced frequency response (EFR) contracts also have capacity market contracts \cite{NGDeratingFactors}.
+Electrical price variability presents an opportunity for arbitrage by energy storage systems (ESS), which may charge and discharge in periods of low and high price respectively. At present however, this revenue alone is not sufficient to justify BESS investment, even under optimistic economic assumptions \cite{Hu2010}. Hence an important aspect of BESS economics is revenue stacking, where multiple revenue streams are captured by the same system. For example by providing grid reliability services as well as performing market arbitrage. In the UK this is illustrated by the fact that the majority of successful BESS applicants for enhanced frequency response (EFR) contracts also have capacity market contracts \cite{NGDeratingFactors}.
 
 \cite{Sabihuddin2015} classify the services that BESS may provide by the continuous charge/discharge duration, from power quality and regulation ($<$ \SI{1}{\minute}), through bridging power (\SI{1}{\minute} to \SI{1}{\hour}) to energy management ($>$ \SI{1}{hour}). In order to satisfy a given duration a BESS must be specified with the corresponding energy to power ratio.
 
@@ -100,7 +100,7 @@ At the shortest timescale, BESS may receive payments from the grid operator to r
 
 An example of multi-hour energy management is the use of ESS to discharge into peak power demand in a process known as peak shaving. In California, where BESS are being considered as replacement for gas powered peaker plants, a project may receive capacity payments in addition to the sale of energy. However, the regulator de-rates the payment according to a 4 hour target duration, hence a \SI{1}{\mega\watt}/\SI{2}{\mega\watt\hour} BESS would only receive credit for  \SI{0.5}{\mega\watt} of power capacity \cite{NRELPeakingESS}. 
 
-A similar de-rating has also been applied recently in the UK capacity market (CM). This was done due to concerns that the average storage duration of the BESS contracted for CM is shorter than the \SI{2}{\hour} that a stress event may last for. \cite{NGDeratingFactors}. 
+A similar de-rating has also been applied recently in the UK capacity market. This was done due to concerns that the average storage duration of the BESS contracted for the service was shorter than the \SI{2}{\hour} that a stress event may last for. \cite{NGDeratingFactors}. 
 
 The de-rating developments would disfavour the Li-ion systems that have been deployed so far and favour systems with higher energy to power ratios. Redox flow battery (RFB) systems and promising candidates for multi-hour applications and revenue stacking, as the incremental cost of energy capacity is low. Systems deployed so far have an average energy to power ratio of 3.5 \cite{Newbery2018}.
 
@@ -364,11 +364,11 @@ The optimisation of the scheduling was performed for each day in 2017 using both
 \begin{figure}[!ht]
 \centering
 \subfloat[][]{
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./IDD2s_schedules.pdf}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/V_losses_schedules.pdf}
 \label{fig:IDD2s_opt_schedules}
 }
 \subfloat[][]{
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./IDD2s_schedules_SOC.pdf}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/V_losses_SOC.pdf}
 \label{fig:IDD2s_opt_schedules}
 }
 \caption{(a) Optimal VRFB schedules derived for the 22\textsuperscript{nd} August 2017 using LP and NLP optimisation formulations (discharge plotted as negative). (b) corresponding SOC values.}
@@ -391,12 +391,12 @@ In the second case study, the impact of expressing OCV as a function of SOC, and
 \centering
 \subfloat[][]{
 \label{fig:OCV_fixed_dynamic_schedules}
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./OCV_fixed_dynamic_schedules.pdf}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/OCV_fixed_dynamic_schedules.pdf}
 
 }
 \subfloat[][]{
 \label{fig:OCV}
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./OCV_fixed_dynamic_OCV.pdf}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/OCV_fixed_dynamic_OCV.pdf}
 }
 \caption{(a) Optimal VRFB schedules derived for the 22\textsuperscript{nd} August 2017 using NLP formulations where OCV is fixed as $OCV_{50\%}$ and functionalised. (b)Optimal values of OCV where it is functionalised.}
 \end{figure}
@@ -405,11 +405,11 @@ The performance of arbitrage between 16:00 and 20:00 is notably reduced in \cref
 
 %The non-convex objective function in \cref{eqn: NLP_true_OCV_long_form} makes the formulation less robust: in the 2017 data there were two days in which the price parameter set yielded problem matrices that required greater diagonal adjustment than the default maximum permitted value of 1e-6. In these instances Gurobi returns an error message describing the diagonal adjustment that would be required. Solutions for the two days were obtained by increasing the Gurobi Parameter "PSDTol" to 1.7e-6.
 
-\subsection{Cell-Voltage constraint}
+\subsection{NLP with functional OCV and Cell-Voltage constraint}
 \label{Results_Cell_Voltage_Constraint}
-In the NLP formulations given in \cref{eqn: Non-Linear_Schedule_Objective_Function_Current_as_Variable,eqn: NLP_true_OCV_long_form} it is assumed that the RFB may be charged at maximum current-density at the maximum SOC. This was the charging strategy applied in \cite{Reed2016}, where the cell-voltage was allowed to reach \SI{1.85}{\volt} at the highest current-density, corresponding to an approximate SOC of 0.85. Overcharging may lead to oxygen evolution at the cathode and hydrogen evolution at the anode. This results in reduced coulombic efficiency and, more importantly, the evolved gases can cause a range of problems as described by \cite{Kear2012}.  The particular cell-voltage at which gas evolution becomes problematic will vary from system to system as it depends on the particular electrolyte chemistry. 
+In the NLP formulations given in \cref{Model_Formulation_NLP_treatment_voltaic_losses,Model_Formulation_Functional_Treatment_OCV} it is assumed that the RFB may be charged at maximum current-density at the maximum SOC. This was the charging strategy applied by \cite{Reed2016}, where the cell-voltage was allowed to reach \SI{1.85}{\volt} at the highest current-density, corresponding to an approximate SOC of 0.85. Overcharging may lead to oxygen evolution at the cathode and hydrogen evolution at the anode. This results in reduced coulombic efficiency and, more importantly, the evolved gases can cause a range of problems as described by \cite{Kear2012}.  The particular cell-voltage at which gas evolution becomes problematic will vary from system to system as it depends on the particular electrolyte chemistry. 
 
-With the introduction of the functional OCV in \cref{eqn: NLP_true_OCV_long_form}, the application of a maximum cell-voltage constraint is now rational. In this case study $V_{max}$ in \cref{eqn: Cell_Voltage_Constraint} was set at 1.65, just below the voltage at which \cite{Wei2017} reported evolution of macroscopic bubbles of hydrogen and oxygen (\SI{1.70}{\volt}). 
+With the introduction of the functional OCV in \cref{eqn: NLP_true_OCV_long_form}, the application of a maximum cell-voltage constraint is now possible. In this case study $V_{max}$ in \cref{eqn: Cell_Voltage_Constraint} was set at 1.65, just below the voltage at which \cite{Wei2017} reported evolution of macroscopic bubbles of hydrogen and oxygen (\SI{1.70}{\volt}). 
 
 Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage_Constraint} for the 2017 data resulted in \pounds 26.07 compared to \pounds 26.40 when the cell voltage was not constrained. The difference is small because high current-density is already discouraged by the voltaic losses in \cref{eqn: NLP_true_OCV_long_form}. 
 
@@ -419,11 +419,11 @@ Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage
 \centering
 \subfloat[][]{
 \label{fig:V_max_schedules_no_effect_day}
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./V_max_schedules_no_effect_day.pdf}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/V_max_schedules_no_effect_day.pdf}
 }
 \subfloat[][]{
 \label{fig:V_max_voltages_no_effect_day}
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./V_max_voltages_no_effect_day.pdf}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/V_max_voltages_no_effect_day.pdf}
 }
 \caption{(a) Optimal VRFB schedules derived for the 22\textsuperscript{nd} August 2017 by maximising \cref{eqn: NLP_true_OCV_long_form} with no cell-voltage constraint, and subject to the cell voltage constraint given in \cref{eqn: Cell_Voltage_Constraint}. (b) Corresponding cell-voltage profiles.}
 \end{figure}
@@ -435,11 +435,11 @@ Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage
 \centering
 \subfloat[][]{
 \label{fig:V_max_schedules}
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./V_max_schedules.pdf}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/V_max_schedules.pdf}
 }
 \subfloat[][]{
 \label{fig:V_max_voltages}
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./V_max_voltages.pdf}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/V_max_voltages.pdf}
 }
 \caption{(a) Optimal VRFB schedules derived for the 5\textsuperscript{th} February 2017 by maximising \cref{eqn: NLP_true_OCV_long_form} with no cell-voltage constraint, and subject to the cell voltage constraint given in \cref{eqn: Cell_Voltage_Constraint}. (b) Corresponding cell-voltage profiles.}
 \end{figure}
@@ -447,6 +447,25 @@ Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage
 In the unconstrained case the RFB charges at the maximum current-density of \SI{3200}{\ampere\per\square\meter} in hour 19 in order to capitalise on the unusually low electrical price, resulting in a cell-voltage of \SI{1.71}{\volt}. In the constrained case, the current-density is restricted to \SI{2213}{\ampere\per\square\meter} in the same period, and the RFB must charge more (and discharge less) in other periods to satisfy \cref{eqn: Method_Constraint_E_Conservation}. The impact of the constraint would be more severe if the variations in price data were greater, or the maximum voltage set at a lower value.
 
 The application of the linear constraint on cell-voltage increases the time to process the 2017 data from \SI{217}{\second} to \SI{232}{\second}.
+
+An important aspect of RFB economics is the variability of daily price profile across the year. Figure XX shows composite day-ahead price data for the winter and summer seasons in 2017. In summer months, the availability of cheap solar power depresses the price around midday, and the peak evening demand is low, resulting in two peaks of similar height. In winter, the solar price depression is not so marked, and the price in the evening peak becomes higher, hence the profile is more like a single peak.
+
+\cref{fig:winter_day_schedules,fig:summer_day_schedules} show the optimal LP and NLP schedules for example winter and summer days from 2017. Although the revenue obtained is \pounds 0.074 for both days under the NLP optimal schedule, the required throughput of the battery is greater on the summer day. This has an impact on the error of the LP revenue estimation - for the winter day the revenue is estimated at \pound 0.088, whereas on the summmer day it is estimated at \pound 0.099. The error in the estimation of revenue under the LP optimisation is dependent on energy throughput.
+
+\begin{figure}[!ht]
+\centering
+\subfloat[][]{
+\label{fig:winter_day_schedules}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/winter_day_schedules.pdf}
+}
+\subfloat[][]{
+\label{fig:summer_day_schedules}
+\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/summer_day_schedules.pdf}
+}
+\caption{Optimal schedules by LP and NLP optimisation for (a) Winter day with pronounced evening price peak (b) Summer day with afternoon price depression associated with solar power}
+\end{figure}
+
+
 
 \subsection{Analysis of Assumptions}
 \label{analysis_of_assumptions}
