@@ -450,7 +450,7 @@ The application of the linear constraint on cell-voltage increases the time to p
 
 An important aspect of RFB economics is the variability of daily price profile across the year. Figure XX shows composite day-ahead price data for the winter and summer seasons in 2017. In summer months, the availability of cheap solar power depresses the price around midday, and the peak evening demand is low, resulting in two peaks of similar height. In winter, the solar price depression is not so marked, and the price in the evening peak becomes higher, hence the profile is more like a single peak.
 
-\cref{fig:winter_day_schedules,fig:summer_day_schedules} show the optimal LP and NLP schedules for example winter and summer days from 2017. Although the revenue obtained is \pounds 0.074 for both days under the NLP optimal schedule, the required throughput of the battery is greater on the summer day. This has an impact on the error of the LP revenue estimation - for the winter day the revenue is estimated at \pound 0.088, whereas on the summmer day it is estimated at \pound 0.099. The error in the estimation of revenue under the LP optimisation is dependent on energy throughput.
+\cref{fig:winter_day_schedules,fig:summer_day_schedules} show the optimal LP and NLP (\cref{Model_Formulation_Constraint_Cell_Voltage}) schedules for example winter and summer days from 2017. Although the revenue obtained is \pounds 0.074 for both days under the NLP optimal schedule, the required throughput of the battery is greater on the summer day. This has an impact on the error of the LP revenue estimation - for the winter day the revenue is estimated at \pound 0.088, whereas on the summmer day it is estimated at \pound 0.099. The error in the estimation of revenue under the LP optimisation is dependent on energy throughput.
 
 \begin{figure}[!ht]
 \centering
@@ -464,7 +464,6 @@ An important aspect of RFB economics is the variability of daily price profile a
 }
 \caption{Optimal schedules by LP and NLP optimisation for (a) Winter day with pronounced evening price peak (b) Summer day with afternoon price depression associated with solar power}
 \end{figure}
-
 
 
 \subsection{Analysis of Assumptions}
