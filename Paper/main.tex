@@ -53,7 +53,7 @@
 \linenumbers
 \begin{frontmatter}
 
-\title{The importance of fidelity in the scheduling of Redox Flow Batteries.}
+\title{Improving the Fidelity of Redox Flow Battery Schedule Optimisation for more Accurate Techno-economic Analyses.}
 
 
 \author{D. Roberts }
@@ -66,12 +66,12 @@
 \cortext[cor_author]{Corresponding author}
 
 \begin{abstract}
-Redox Flow Battery (RFB) systems are promising technologies for the multi-hour electrical energy storage that would be necessary in a future low carbon emission UK electrical grid based on wind and solar power. In order to perform techno-economic analyses (TEA) on these systems, it is necessary to calculate potential revenue for realistic applications, ideally under optimal operation (scheduling). In the present work, a novel schedule optimisation framework is introduced in which coulombic and voltaic components are separated, and the problem variablised in terms of current-density rather than power. This approach allows the expression of ohmic losses as a convex quadratic function of current-density in the objective function while maintaining all linear constraints. The resultant non-linear problem is more readily solvable than previous expressions in terms of power. It is demonstrated for an arbitrage application involving a vanadium RFB that the consideration of variable voltaic losses results in a significant improvement to the accuracy of revenue estimation when compared to the typical linear programming approach, where a fixed efficiency is assumed. The framework allows the removal of the assumption of a representative fixed open-cell voltage, which further improves revenue estimation, at the cost of computability. In a third case study, the framework allows a linear constraint on the working cell-voltage, resulting in current-density restriction at high state of charge (SOC) in order to avoid hydrogen and oxygen evolution. This feature would be relevant for the optimisation of Li-ion battery scheduling, where voltage is a very important consideration. The introduced framework is intended to assist technical optimisation of future RFB systems, for example in determining the optimum pump or cooling system size. The framework allows product optimisation in terms of revenue under optimal scheduling against a price signal (rather than metrics such as system cost, or lifetime cost per unit energy throughput as in previous works).
+Redox Flow Battery (RFB) systems are promising technologies for the multi-hour electrical energy storage that would be necessary in a future low carbon emission  electrical grids based on wind and solar power. In order to perform techno-economic analyses (TEA) on these systems it is necessary to calculate potential revenue for realistic applications, ideally under optimal operation (scheduling). In this work a novel schedule optimisation framework is introduced in which coulombic and voltaic components are separated, and the problem variablised in terms of current-density rather than power. This framework allows the expression of ohmic losses as a convex quadratic function of current-density in the objective function while maintaining all linear constraints. It is demonstrated for an arbitrage application involving a vanadium RFB that the consideration of variable voltaic losses results in a significant improvement to the accuracy of revenue estimation when compared to the typical linear programming (LP) approach where a fixed efficiency is assumed. The quadratic formulation is more readily solvable than alternative approaches reported in the literature, with minimal increase to solve time compared to the LP approach. The fidelity of the RFB representation is further increased by expressing open cell voltage as a function of state of charge (SOC). At low SOC, the current-density required for a given power is greater, and hence the ohmic losses are higher. In a third development, a linear constraint is applied to the working cell-voltage, resulting in current-density restriction at high SOC in order to avoid hydrogen and oxygen evolution. This feature would also be useful for schedule optimisation of Li-ion batteries, where voltage is an important consideration. The introduced framework is intended to assist techno-economic optimisation of future RFB systems, for example in determining the optimum pump or cooling system size for a particular application. The framework allows system optimisation in terms of revenue under optimal scheduling against a price signal rather than metrics such as system cost, or lifetime cost per unit energy throughput as in previous works.
 
 \end{abstract}
 
 \begin{keyword}
-Redox flow Battery \sep Optimisation \sep Non-linear Programming \sep Techno-Economic Analysis \sep Scheduling \sep VRFB  
+Redox Flow Battery \sep Optimisation \sep Non-linear Programming \sep Techno-Economic Analysis \sep Scheduling \sep VRFB  
 %% keywords here, in the form: keyword \sep keyword
 
 %% MSC codes here, in the form: \MSC code \sep code
@@ -86,7 +86,7 @@ Redox flow Battery \sep Optimisation \sep Non-linear Programming \sep Techno-Eco
 %% main text
 \section{Introduction}
 \label{sec:Intro}
-Worldwide, the need to reduce CO$_2$ emissions is stimulatling the development of a wide range of renewable energy sources. Presently, renewable energy is estimated to account for 10\% of global energy consumption, and this is forecast to grow to 12\% by 2023. The growth of renewable energy is forecast to be highest in the electrical power sector, from 24\% in 2017 to 30\% in 2023. Although hydro power presently accounts for 50\% of renewable power generation, the  intermittent power sources wind and solar are forecast to contribute most to this growth\cite{IEA2018}. A number of large European economies, such as Germany, UK, Italy and Spain obtained 23\% to 30\% of there electrical energy from non-hydro renewable power in 2017 \cite{BP2018}.
+Worldwide, the need to reduce CO$_2$ emissions is stimulating the development of a wide range of renewable energy sources. Presently, renewable energy is estimated to account for 10\% of global energy consumption, and this is forecast to grow to 12\% by 2023. The growth of renewable energy is forecast to be highest in the electrical power sector, from 24\% in 2017 to 30\% in 2023. Although hydro power presently accounts for 50\% of renewable power generation, the  intermittent power sources wind and solar are forecast to contribute most to this growth\cite{IEA2018}. A number of large European economies, such as Germany, UK, Italy and Spain obtained 23\% to 30\% of there electrical energy from non-hydro renewable power in 2017 \cite{BP2018}.
 
 The fluctuating output from wind and solar is topped up to match demand primarily by varying output from fossil fuel power thermal plant. In the UK, this is specifically achieved by gas turbines and to a lesser extent coal plant \cite{DraxElectricInsights}. In order to meet the strict CO$_2$ emissions targets for the UK electrical supply by 2050, and bearing in mind that nuclear power capacity is not predicted to grow until after 2030, either carbon capture or significantly greater renewable power penetration will be required at the supply side \cite{FES2018}.
 
@@ -104,9 +104,9 @@ A similar de-rating has also been applied recently in the UK capacity market. Th
 
 The de-rating developments would disfavour the Li-ion systems that have been deployed so far and favour systems with higher energy to power ratios. Redox flow battery (RFB) systems and promising candidates for multi-hour applications and revenue stacking, as the incremental cost of energy capacity is low. Systems deployed so far have an average energy to power ratio of 3.5 \cite{Newbery2018}.
 
-In order to quantify the economic merits of RFB systems in comparison to other BESS, or indeed ESS, it is necessary to perform techno-economic analyses (TEA) for particular applications. TEA should involve optimisation of the operation of a BESS to maximise revenue (or minimise costs). This should be done at various energy and power ratings (as these are decoupled in a non-hybrid RFB) to find the global optimum, as described by \cite{Oudalov2007}. The optimisation of operation requires determining the schedule, that is, the power output of the battery in each sub-period that maximises benefit without violating energy conservation.
+In order to quantify the economic merits of RFB systems in comparison to other BESS, or indeed ESS, it is necessary to perform techno-economic analyses (TEA) for particular applications. TEA should involve optimisation of the operation of a BESS to maximise revenue (or minimise costs). This should be done at various energy and power ratings (as these are decoupled in a non-hybrid RFB) to find the global optimum, as described by \cite{Oudalov2007}. The optimisation of operation requires determining the schedule, that is the power output of the battery in each sub-period, that maximises benefit without violating energy conservation.
 
-Where a price signal exists optimisation is commonly performed by posing a linear programming (LP) problem \emph{do I dump here a list of all the LP references i will refer to below?}. In this method, the objective function and the constraints on the system are expressed as linear algebraic terms. On the resulting geometric surface, the optimum is guaranteed to lie on a vertex, hence a time-consuming search of the whole surface is not required.
+Where a price signal exists optimisation is commonly performed by posing a linear programming (LP) problem. In this method, the objective function and the constraints on the system are expressed as linear algebraic terms. On the resulting geometric surface, the optimum is guaranteed to lie on a vertex, hence a time-consuming search of the whole surface is not required.
 
 \cite{Johnston2015} used a LP formulation to optimise the scheduling of a VRFB installed at a wind farm. The objective was to maximise revenue on the wholesesale electrical market and the frequency response market, while always maintaining an energy reserve in order to meet . By repeating this process at different energy and power ratings, the authors found that the economically optimal VRFB rating for the \SI{50}{\mega\watt} wind farm was \SI{5.3}{\mega\watt} and \SI{3}{\mega\watt\hour}. This supports the point made above regarding the poor economics of wholesale market arbitrage - the optimal RFB rating is dictated by the frequency market revenue and the reserve energy requirement. Increasing the capacity of the VRFB in order to perform additional wholesale market arbitrage is not economical. The authors also suggested that a hybrid system may be suitable, as the economically optimal VRFB operates in a narrow SOC window when providing frequency regulation, with the remaining SOC held in reserve for large frequency deviations that occur infrequently.
 
@@ -120,14 +120,14 @@ A full system LP schedule optimisation problem was posed by \cite{Chen2012} to a
 
 \cite{Gomes2017}  studied the application of a VRFB in order to cope with stochastic deviations from the forecast exports of wind and solar power into a day ahead market. A two stage optimisation was applied, and LP was used to optimise the VRFB schedule based on the forecast  in the first stage.
 
-\cite{Hu2010} optimised the schedule of a VRFB and a poly-sulphide bromine RFB in order to maximise arbitrage revenue on the Danish day ahead electrical spot market. This approach was not strictly LP, as discussed in \cref{Model_Formulation_LP_Reference_Current_Density_Terms}, but the problem may be reposed in LP form.
+\cite{Hu2010} optimised the schedule of a VRFB and a poly-sulphide bromine RFB in order to maximise arbitrage revenue on the Danish day ahead electrical spot market. This approach was not strictly LP, but the problem may be reposed in LP form.
 
 A significant simplification in the representation of the RFB in all of the above studies is the assumption of a constant efficiency. In reality, the efficiency of any BESS is a function of the charge/discharge power, among other variables, such as state of charge (SOC). In the LP formulation, if efficiency were defined as a  function of power, it would be necessary to place this function on the denominator of the  discharge SOC increment expression. This would complicate the problem as the constraint is now non-linear and non-quadratic. \cite{Nguyen2014} report a highly detailed non-linear model for the charge and discharge efficiency of a vanadium RFB. In a subsequent article (\cite{Nguyen2015}) this function was incorporated into the SOC expression of a schedule optimisation problem in the aforementioned fashion. Due to the complication of the SOC constraint, the authors employ a search approach with dynamic programming (DP) to break the problem down. This is more computationally intensive than the LP method, but the authors state that an optimum schedule may be found in an acceptable time-scale as the small number of variables and the presence of constraints limit the search space.
 A DP search approach is also used by \cite{Oudalov2007}, where the internal resistance of the BESS is expressed as a function of SOC in a TEA of a VRFB and a lead acid battery for industrial peak-shaving.
 
-\cite{Sarker2017} also incorporated the dependency of efficiency on power in a scheduling problem (although applied to a Li-ion battery rather than a RFB). Quadratic terms are employed to relate losses to C-rate of charge and discharge. The presence of this quadratic function on the denominator of the discharge SOC increment term is avoided by redefining the discharge power variable as upstream of losses (rather than the power delivered to the grid). The discharge efficiency function is then moved from the SOC expression and multiplied by the discharge power variable in the objective function. The charge efficiency is left in the SOC expression (redefining the charge power variable in the same way would require dividing it by the quadratic charge efficiency term in the objective function). The problem therefore becomes convex (quadratic), but non-linear in both objective function and constraint. The authors then employ a linear approximation technique\sol{does this need a reference}, and combine the efficiency treatment with a piece-wise linear treatment of degradation as a function of power, giving an overall mixed integer-linear programming problem (MILP). 
+\cite{Sarker2017} also incorporated the dependency of efficiency on power in a scheduling problem (although applied to a Li-ion battery rather than a RFB). Quadratic terms are employed to relate losses to C-rate of charge and discharge. The presence of this quadratic function on the denominator of the discharge SOC increment term is avoided by redefining the discharge power variable as upstream of losses (rather than the power delivered to the grid). The discharge efficiency function is then moved from the SOC expression and multiplied by the discharge power variable in the objective function. The charge efficiency is left in the SOC expression (redefining the charge power variable in the same way would require dividing it by the quadratic charge efficiency term in the objective function). The problem therefore becomes convex (quadratic), but non-linear in both objective function and constraint. The authors then employ a linear approximation technique\sol{does this need a reference? DR: do you mean for the technique used?}, and combine the efficiency treatment with a piece-wise linear treatment of degradation as a function of power, giving an overall mixed integer-linear programming problem (MILP). 
 
-Accurate treatment of efficiency is important, as losses impact the revenue available from arbitrage. The key innovation of the present work is the introduction of a RFB schedule optimisation framework posed in terms of current-density rather than power. This allows the separation of the voltaic and coulombic components of the power input/output. Using the introduced framework, three novel augmentations \emph{(add-ons?)} to the typical scheduling problem are posed while maintaining an easily computable problem:
+Accurate treatment of efficiency is important, as losses impact the revenue available from arbitrage. The key innovation of the present work is the introduction of a RFB schedule optimisation framework posed in terms of current-density rather than power. This allows the separation of the voltaic and coulombic components of the power input/output. Using the introduced framework, three improvements to the RFB representation in the schedule optimisation are posed while maintaining an easily computable problem:
 
 \begin{itemize}
     \item Quadratic expression of $I^2R$ voltaic losses in the objective function under linear constraints.
@@ -135,7 +135,7 @@ Accurate treatment of efficiency is important, as losses impact the revenue avai
     \item Maximum cell voltage constraint in terms of OCV and overpotential
 \end{itemize}
 
-The importance of these improvements to the fidelity of revenue estimation is demonstrated in a day-ahead price arbitrage case study. 
+The importance of these improvements to the accuracy of revenue estimation is demonstrated in a day-ahead price arbitrage case study. 
 
 
 \section{Model formulation}
@@ -157,7 +157,7 @@ R = \tau \sum_{t \in Y} (P_{Dis,t} - P_{Chg,t}) p_t
 
 where $P_{Dis,t}$ and $P_{Chg,t}$ represent the bounded variables discharge and charge power (\si{\watt}) between the RFB and the rest of the system in sub-period $t$. $p_t$ is the price of electrical energy (\SI[sticky-per, bracket-unit-denominator = false]{}[\pounds]{\per\mega\watt\hour}) in sub-period $t$, and $\tau$ the time-step parameter  (\si{\hour}). 
 
-The SOC of the RFB is defined after \cite{Gomes2017} by:
+The SOC of the RFB at time $t$ is defined after \cite{Gomes2017} by:
 
 \begin{equation}
 \label{eqn: Lit_Review_LP_SOC_Constraint_Example}
@@ -401,7 +401,7 @@ In the second case study, the impact of expressing OCV as a function of SOC, and
 \caption{(a) Optimal VRFB schedules derived for the 22\textsuperscript{nd} August 2017 using NLP formulations where OCV is fixed as $OCV_{50\%}$ and functionalised. (b)Optimal values of OCV where it is functionalised.}
 \end{figure}
 
-The performance of arbitrage between 16:00 and 20:00 is notably reduced in \cref{fig:OCV}. In this period there are small fluctuations in price from which the RFB derived revenue when a fixed OCV was assumed. However the global optimum requires that the RFB be at a low SOC in these hours, and hence at a low OCV. The low OCV means that a higher current-density would be required to obtain a given pwoer outpute, and hence higher voltaic losses would be incurred, eroding the revenue. On this date the impact on revenue is low; the optimal schedule with consideration of functional OCV results in a revenue of \pounds 0.062 compared to \pounds 0.063 for the base case. Across 2017 the formulation with functional OCV returns \pounds 26.40 compared to \pounds 27.81 for the fixed OCV case. The assumption of a fixed OCV (parametrised at 50\% SOC) therefore results in a small but not insignificant overestimation of revenue in this application. Including functionalised OCV in the objective function increases the solve time - the 2017 data were processed in \SI{217}{\second} compared to \SI{129}{\second} for the convex objective function in \cref{eqn: Non-Linear_Schedule_Objective_Function_Current_as_Variable}. 
+The performance of arbitrage between 16:00 and 20:00 is notably reduced in \cref{fig:OCV}. In this period there are small fluctuations in price from which the RFB derived revenue when a fixed OCV was assumed. However the global optimum requires that the RFB be at a low SOC in these hours, and hence at a low OCV. The low OCV means that a higher current-density would be required to obtain a given pwoer outpute, and hence higher voltaic losses would be incurred, eroding the revenue. On this date the impact on revenue is low; the optimal schedule with consideration of functional OCV results in a revenue of \pounds \SI{0.062}{\per\kilo\watt} compared to \pounds \SI{0.063}{\per\kilo\watt} for the base case. Across 2017 the formulation with functional OCV returns \pounds \SI{26.40}{\per\kilo\watt} compared to \pounds \SI{27.81}{\per\kilo\watt} for the fixed OCV case. The assumption of a fixed OCV (parametrised at 50\% SOC) therefore results in a small but not insignificant overestimation of revenue in this application. Including functionalised OCV in the objective function increases the solve time - the 2017 data were processed in \SI{217}{\second} compared to \SI{129}{\second} for the convex objective function in \cref{eqn: Non-Linear_Schedule_Objective_Function_Current_as_Variable}. 
 
 %The non-convex objective function in \cref{eqn: NLP_true_OCV_long_form} makes the formulation less robust: in the 2017 data there were two days in which the price parameter set yielded problem matrices that required greater diagonal adjustment than the default maximum permitted value of 1e-6. In these instances Gurobi returns an error message describing the diagonal adjustment that would be required. Solutions for the two days were obtained by increasing the Gurobi Parameter "PSDTol" to 1.7e-6.
 
@@ -413,23 +413,7 @@ With the introduction of the functional OCV in \cref{eqn: NLP_true_OCV_long_form
 
 Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage_Constraint} for the 2017 data resulted in \pounds 26.07 compared to \pounds 26.40 when the cell voltage was not constrained. The difference is small because high current-density is already discouraged by the voltaic losses in \cref{eqn: NLP_true_OCV_long_form}. 
 
-\cref{fig:V_max_schedules_no_effect_day} shows the optimal scheduling with and without voltage constraint for the median revenue day 22\textsuperscript{nd} August 2017, and \cref{fig:V_max_voltages_no_effect_day} the corresponding cell voltage profiles, showing a maximum cell-voltage of \SI{1.62}{\volt} and hence no violation in the unconstrained schedule.
-
-\begin{figure}[!ht]
-\centering
-\subfloat[][]{
-\label{fig:V_max_schedules_no_effect_day}
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/V_max_schedules_no_effect_day.pdf}
-}
-\subfloat[][]{
-\label{fig:V_max_voltages_no_effect_day}
-\includegraphics[trim = 2cm 8cm 2cm 9cm, clip, width = .5\textwidth]{./figures/V_max_voltages_no_effect_day.pdf}
-}
-\caption{(a) Optimal VRFB schedules derived for the 22\textsuperscript{nd} August 2017 by maximising \cref{eqn: NLP_true_OCV_long_form} with no cell-voltage constraint, and subject to the cell voltage constraint given in \cref{eqn: Cell_Voltage_Constraint}. (b) Corresponding cell-voltage profiles.}
-\end{figure}
-
-
-\cref{fig:V_max_schedules} shows the optimal schedules with and without constraint for 5\textsuperscript{th} February 2017, where the difference in revenue was greatest (\pounds 0.018 vs. \pounds 0.020). \cref{fig:V_max_voltages} shows the corresponding cell-voltage profiles.
+\cref{fig:V_max_schedules} shows the optimal schedules with and without constraint for 5\textsuperscript{th} February 2017, where the difference in revenue was greatest (\pounds \SI{0.18}{\per\kilo\watt} vs. \pounds \SI{0.20}{\per\kilo\watt}). \cref{fig:V_max_voltages} shows the corresponding cell-voltage profiles.
 
 \begin{figure}[!ht]
 \centering
@@ -444,13 +428,28 @@ Maximising \cref{eqn: NLP_true_OCV_long_form} subject to \cref{eqn: Cell_Voltage
 \caption{(a) Optimal VRFB schedules derived for the 5\textsuperscript{th} February 2017 by maximising \cref{eqn: NLP_true_OCV_long_form} with no cell-voltage constraint, and subject to the cell voltage constraint given in \cref{eqn: Cell_Voltage_Constraint}. (b) Corresponding cell-voltage profiles.}
 \end{figure}
 
-In the unconstrained case the RFB charges at the maximum current-density of \SI{3200}{\ampere\per\square\meter} in hour 19 in order to capitalise on the unusually low electrical price, resulting in a cell-voltage of \SI{1.71}{\volt}. In the constrained case, the current-density is restricted to \SI{2213}{\ampere\per\square\meter} in the same period, and the RFB must charge more (and discharge less) in other periods to satisfy \cref{eqn: Method_Constraint_E_Conservation}. The impact of the constraint would be more severe if the variations in price data were greater, or the maximum voltage set at a lower value.
+In the unconstrained case the RFB charges at the maximum current-density of \SI{3200}{\ampere\per\square\meter} in hour 20 in order to capitalise on the unusually low electrical price, resulting in a cell-voltage of \SI{1.71}{\volt}. In the constrained case, the current-density is restricted to \SI{2213}{\ampere\per\square\meter} in the same period, and the RFB must charge more (and discharge less) in other periods to satisfy \cref{eqn: Method_Constraint_E_Conservation}. The impact of the constraint would be more severe if the variations in price data were greater, or the maximum voltage set at a lower value.
 
 The application of the linear constraint on cell-voltage increases the time to process the 2017 data from \SI{217}{\second} to \SI{232}{\second}.
+\subsection{Impact of price profile on optimisation results}
+\label{Results_impact_of_price_profile}
+An important aspect of RFB economics is the variability of daily price profile across the year. \Cref{fig:DJF_2017_N2EX,fig:JJA_2017_N2EX} show composite day-ahead price data for the winter and summer seasons in 2017. In summer months, the availability of cheap solar power depresses the price around midday, and the peak evening demand is low, resulting in two peaks of similar height. In winter, the solar price depression is not so marked, and the price in the evening peak becomes higher, hence the profile is more like a single peak.
 
-An important aspect of RFB economics is the variability of daily price profile across the year. Figure XX shows composite day-ahead price data for the winter and summer seasons in 2017. In summer months, the availability of cheap solar power depresses the price around midday, and the peak evening demand is low, resulting in two peaks of similar height. In winter, the solar price depression is not so marked, and the price in the evening peak becomes higher, hence the profile is more like a single peak.
+\begin{figure}[!ht]
+\centering
+\subfloat[][]{
+\label{fig:JJA_2017_N2EX}
+\includegraphics[trim = 13.8cm 3.5cm 10.3cm 4.5cm, clip, width = .4\textwidth]{./figures/JJA_2017.pdf}
+}
+\subfloat[][]{
+\label{fig:DJF_2017_N2EX}
+\includegraphics[trim = 13.8cm 3.5cm 10.3cm 4.5cm, clip, width = .4\textwidth]{./figures/DJF_2017.pdf}
+}
+\caption{Composite hourly N2EX day-ahead price data for a) June, July and August 2017 and b) December,January, February 2017}
+\end{figure}
 
-\cref{fig:winter_day_schedules,fig:summer_day_schedules} show the optimal LP and NLP (\cref{Model_Formulation_Constraint_Cell_Voltage}) schedules for example winter and summer days from 2017. Although the revenue obtained is \pounds 0.074 for both days under the NLP optimal schedule, the required throughput of the battery is greater on the summer day. This has an impact on the error of the LP revenue estimation - for the winter day the revenue is estimated at \pound 0.088, whereas on the summmer day it is estimated at \pound 0.099. The error in the estimation of revenue under the LP optimisation is dependent on energy throughput.
+
+\cref{fig:winter_day_schedules,fig:summer_day_schedules} show the optimal LP and NLP (\cref{Model_Formulation_Constraint_Cell_Voltage}) schedules for example winter and summer days from 2017. Although the revenue obtained is \pounds \SI{0.074}{\per\kilo\watt} for both days under the NLP optimal schedule, the throughput of the RFB is greater on the summer day. This has an impact on the error of the LP revenue estimation; for the winter day the revenue is estimated at \pounds \SI{0.088}{\per\kilo\watt}, whereas on the summmer day it is estimated at \pounds \SI{0.099}{\per\kilo\watt}. The error in the estimation of revenue using the LP optimisation is therefore dependent on the application.
 
 \begin{figure}[!ht]
 \centering
